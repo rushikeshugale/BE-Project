@@ -17,7 +17,8 @@ import pyttsx3
 import pytesseract
 import pipes
 import time
-from resizeimage import resizeimage
+
+#from resizeimage import resizeimage
 from playsound import playsound
 
 
@@ -31,51 +32,54 @@ class mainGui:
 
 
     def main_window(self):
-        self.root.geometry('1366x768')
+        self.root.geometry('1920x1080')
         self.root.title("Text Extractor & Analyzer")
         self.root.configure(background='gray')
         # self.frame = Frame(root, width=1800, height=900)
         # self.frame.pack()
 
 
-        self.quite_button = Button(root, text="Quit", width=15, border=5, font='inconsolata 18 bold', bg="red",
-                                  fg='white', command=self.quit)
+        self.quite_button = Button(root, text="Quit", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                  fg='black', command=self.quit)
         self.quite_button.pack(padx=2, pady=2)
-        self.quite_button.place(x=1130, y=10)
-        self.home_button = Button(root, text="Home", width=15, border=5, font='inconsolata 18 bold', bg="red",
-                                  fg='white', command=self.goto_home_window)
-        self.home_button.pack(padx=2, pady=2)
-        self.home_button.place(x=1130, y=80)
+        self.quite_button.place(x=1230, y=10)
 
         self.image_photo = tk.PhotoImage(file='Image.png')
         self.image_button = Button(root, width=300, height=300, text="Image", border=5, font='inconsolata 18 bold',
-                                   image=self.image_photo, bg="skyblue", fg='red', compound=TOP, command=self.imageFunc)
+                                   image=self.image_photo, bg="crimson", fg='black', compound=TOP, command=self.imageFunc)
         self.image_button.pack(side=tk.LEFT, padx=5, pady=5)
-        self.image_button.place(x=150)
+        self.image_button.place(x=200)
         self.image_button.image = self.image_photo
 
         self.audio_photo = tk.PhotoImage(file='audio.png')
         self.audio_button = Button(root, width=300, height=300, text="Audio", border=5, font='inconsolata 18 bold',
-                                   image=self.audio_photo, bg="skyblue", fg='red', compound=TOP, command=self.audioFunc)
+                                   image=self.audio_photo, bg="crimson", fg='black', compound=TOP, command=self.audioFunc)
         self.audio_button.pack(side=tk.LEFT, padx=5, pady=5)
-        self.audio_button.place(x=465)
+        self.audio_button.place(x=515)
         self.audio_button.image = self.audio_photo
 
         self.video_photo = tk.PhotoImage(file='video.png')
         self.video_button = Button(root, width=300, height=300, text="Video", border=5, font='inconsolata 18 bold',
-                                   image=self.video_photo, bg="skyblue", fg='red', compound=TOP)
+                                   image=self.video_photo, bg="crimson", fg='black', compound=TOP, command=self.videoFunc)
         self.video_button.pack(side=tk.LEFT, padx=5, pady=5)
-        self.video_button.place(x=780)
+        self.video_button.place(x=830)
         self.video_button.image = self.video_photo
 
 
     def goto_home_window(self):
         if self.capture_button.winfo_ismapped():
             self.forget_image_window_button()
-
         self.main_window()
 
+    def goto_home_window1(self):
+        if self.record_audio_button.winfo_ismapped():
+            self.forget_audio_window_button()
+        self.main_window()
 
+    def goto_home_window2(self):
+        if self.capture_button.winfo_ismapped():
+            self.forget_video_window_button()
+        self.main_window()
 
 
 
@@ -91,38 +95,44 @@ class mainGui:
         self.textbox.place(x=560, y=20)
         # self.textbox.insert(END, self.finalText)
 
+        self.home_button = Button(root, text="Home", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                  fg='black', command=self.goto_home_window)
+        self.home_button.pack(padx=2, pady=2)
+        self.home_button.place(x=1230, y=80)
+
+
         self.imagebox = Text(root, width=45, height=26, borderwidth=25, font=("inconsolata", 14))
         self.imagebox.config(undo=True, wrap='word')
         self.imagebox.pack()
         self.imagebox.place(x=0, y=20)
         self.imagebox.insert(END, self.finalText)
 
-        self.copy_button = Button(root, text="Copy to clipboard", width=15, border=5, font='inconsolata 18 bold', bg="red",
-                                  fg='white', command=self.copy_to_clipboard)
+        self.copy_button = Button(root, text="Copy to clipboard", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                  fg='black', command=self.copy_to_clipboard)
         self.copy_button.pack(padx=2, pady=2)
-        self.copy_button.place(x=1130, y=150)
+        self.copy_button.place(x=1230, y=150)
 
-        self.export_button = Button(root, text="Export as txt", width=15, border=5, font='inconsolata 18 bold', bg="red",
-                                    fg='white', compound=TOP, command=self.export_file)
+        self.export_button = Button(root, text="Export as txt", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                    fg='black', compound=TOP, command=self.export_file)
         self.export_button.pack(padx=2, pady=2)
-        self.export_button.place(x=1130, y=220)
+        self.export_button.place(x=1230, y=220)
 
-        self.translate_button = Button(root, text="Translate", width=15,  border=5, font='inconsolata 18 bold', bg="red",
-                                       fg='white', command=self.translate_file)
+        self.translate_button = Button(root, text="Translate", width=15,  border=5, font='inconsolata 18 bold', bg="white",
+                                       fg='black', command=self.translate_file)
         self.translate_button.pack(padx=2, pady=2)
-        self.translate_button.place(x=1130, y=290)
+        self.translate_button.place(x=1230, y=290)
 
-        self.listen_button = Button(root, text="Listen", width=15, border=5, font='inconsolata 18 bold', bg="red", fg='white',
+        self.listen_button = Button(root, text="Listen", width=15, border=5, font='inconsolata 18 bold', bg="white", fg='black',
                                     command=self.listen_as_audio)
         self.listen_button.pack(padx=2, pady=2)
-        self.listen_button.place(x=1130, y=360)
+        self.listen_button.place(x=1230, y=360)
 
 
-        self.text_it_button = Button(root, text="Text it", width=15, border=5, font='inconsolata 18 bold', bg='red', fg='white', command=self.image_to_text)
+        self.text_it_button = Button(root, text="Text it", width=15, border=5, font='inconsolata 18 bold', bg='white', fg='black', command=self.image_to_text)
         self.text_it_button.pack(padx=2, pady=2)
-        self.text_it_button.place(x=1130, y=430)
+        self.text_it_button.place(x=1230, y=430)
 
-        self.view_original_button = Button(root, text="View Original", width=15, border=5, font='inconsolata 18 bold', bg='red', fg='white', command=self.view_original_text)
+        self.view_original_button = Button(root, text="View Original", width=15, border=5, font='inconsolata 18 bold', bg='white', fg='black', command=self.view_original_text)
 
 
         self.capture_button = Button(root, text="Capture", width=15, border=5, font='inconsolata 18 bold', command=self.launch_camera)
@@ -149,6 +159,11 @@ class mainGui:
         self.textbox.place(x=560, y=20)
         # self.textbox.insert(END, self.finalText)
 
+        self.home_button = Button(root, text="Home", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                  fg='black', command=self.goto_home_window1)
+        self.home_button.pack(padx=2, pady=2)
+        self.home_button.place(x=1230, y=80)
+
         self.audiobox = Text(root, width=45, height=26, borderwidth=25, font=("inconsolata", 14))
         self.audiobox.config(undo=True, wrap='word')
         self.audiobox.pack()
@@ -156,38 +171,38 @@ class mainGui:
         self.audiobox.insert(END, self.finalText)
 
         self.copy_button = Button(root, text="Copy to clipboard", width=15, border=5, font='inconsolata 18 bold',
-                                  bg="red",
-                                  fg='white', command=self.copy_to_clipboard)
+                                  bg="white",
+                                  fg='black', command=self.copy_to_clipboard)
         self.copy_button.pack(padx=2, pady=2)
-        self.copy_button.place(x=1130, y=150)
+        self.copy_button.place(x=1230, y=150)
 
         self.export_button = Button(root, text="Export as txt", width=15, border=5, font='inconsolata 18 bold',
-                                    bg="red",
-                                    fg='white', compound=TOP, command=self.export_file)
+                                    bg="white",
+                                    fg='black', compound=TOP, command=self.export_file)
         self.export_button.pack(padx=2, pady=2)
-        self.export_button.place(x=1130, y=220)
+        self.export_button.place(x=1230, y=220)
 
-        self.translate_button = Button(root, text="Translate", width=15, border=5, font='inconsolata 18 bold', bg="red",
-                                       fg='white', command=self.translate_file)
+        self.translate_button = Button(root, text="Translate", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                       fg='black', command=self.translate_file)
         self.translate_button.pack(padx=2, pady=2)
-        self.translate_button.place(x=1130, y=290)
+        self.translate_button.place(x=1230, y=290)
 
-        self.listen_button = Button(root, text="Listen", width=15, border=5, font='inconsolata 18 bold', bg="red",
-                                    fg='white',
+        self.listen_button = Button(root, text="Listen", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                    fg='black',
                                     command=self.listen_as_audio)
         self.listen_button.pack(padx=2, pady=2)
-        self.listen_button.place(x=1130, y=360)
+        self.listen_button.place(x=1230, y=360)
 
-        self.text_it_button = Button(root, text="Text it", width=15, border=5, font='inconsolata 18 bold', bg='red',
-                                     fg='white', command=self.audio_to_text)
+        self.text_it_button = Button(root, text="Text it", width=15, border=5, font='inconsolata 18 bold', bg='white',
+                                     fg='black', command=self.audio_to_text)
         self.text_it_button.pack(padx=2, pady=2)
-        self.text_it_button.place(x=1130, y=430)
+        self.text_it_button.place(x=1230, y=430)
 
         self.view_original_button = Button(root, text="View Original", width=15, border=5, font='inconsolata 18 bold',
-                                           bg='red', fg='white', command=self.view_original_text)
+                                           bg='white', fg='black', command=self.view_original_text)
 
         self.record_audio_button = Button(root, text="Record", width=15, border=5, font='inconsolata 18 bold',
-                                     command=self.launch_camera)
+                                     command=self.audio_to_text_record)
         self.record_audio_button.pack(padx=2, pady=2)
         self.record_audio_button.place(x=180, y=670)
 
@@ -195,6 +210,70 @@ class mainGui:
                                           command=self.browseAudioFunc)
         self.browse_image_button.pack(padx=2, pady=2)
         self.browse_image_button.place(x=730, y=670)
+
+    def videoFunc(self):
+        self.forget_main_window_button()
+
+        self.textbox = Text(root, width=45, height=26, borderwidth=25, font=("inconsolata", 14))
+        self.scr = Scrollbar(root, orient=VERTICAL, command=self.textbox.yview)
+        self.scr.pack()
+        self.scr.place(x=1090, y=60)
+        self.textbox.config(undo=True, wrap='word')
+        self.textbox.pack()
+        self.textbox.place(x=560, y=20)
+        # self.textbox.insert(END, self.finalText)
+
+        self.home_button = Button(root, text="Home", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                  fg='black', command=self.goto_home_window2)
+        self.home_button.pack(padx=2, pady=2)
+        self.home_button.place(x=1230, y=80)
+
+        self.audiobox = Text(root, width=45, height=26, borderwidth=25, font=("inconsolata", 14))
+        self.audiobox.config(undo=True, wrap='word')
+        self.audiobox.pack()
+        self.audiobox.place(x=0, y=20)
+        self.audiobox.insert(END, self.finalText)
+
+        self.copy_button = Button(root, text="Copy to clipboard", width=15, border=5, font='inconsolata 18 bold',
+                                  bg="white",
+                                  fg='black', command=self.copy_to_clipboard)
+        self.copy_button.pack(padx=2, pady=2)
+        self.copy_button.place(x=1230, y=150)
+
+        self.export_button = Button(root, text="Export as txt", width=15, border=5, font='inconsolata 18 bold',
+                                    bg="white",
+                                    fg='black', compound=TOP, command=self.export_file)
+        self.export_button.pack(padx=2, pady=2)
+        self.export_button.place(x=1230, y=220)
+
+        self.translate_button = Button(root, text="Translate", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                       fg='black', command=self.translate_file)
+        self.translate_button.pack(padx=2, pady=2)
+        self.translate_button.place(x=1230, y=290)
+
+        self.listen_button = Button(root, text="Listen", width=15, border=5, font='inconsolata 18 bold', bg="white",
+                                    fg='black',
+                                    command=self.listen_as_audio)
+        self.listen_button.pack(padx=2, pady=2)
+        self.listen_button.place(x=1230, y=360)
+
+        self.text_it_button = Button(root, text="Convert Audio", width=15, border=5, font='inconsolata 18 bold', bg='white',
+                                     fg='black', command=self.video_to_text)
+        self.text_it_button.pack(padx=2, pady=2)
+        self.text_it_button.place(x=1230, y=430)
+
+        self.view_original_button = Button(root, text="View Original", width=15, border=5, font='inconsolata 18 bold',
+                                           bg='white', fg='black', command=self.view_original_text)
+
+        self.capture_button = Button(root, text="Capture", width=15, border=5, font='inconsolata 18 bold', command=self.video_record)
+        self.capture_button.pack(padx=2, pady=2)
+        self.capture_button.place(x=180, y=670)
+
+        self.browse_image_button = Button(root, text="Browse", width=15, border=5, font='inconsolata 18 bold',
+                                          command=self.browseVideoFunc)
+        self.browse_image_button.pack(padx=2, pady=2)
+        self.browse_image_button.place(x=730, y=670)
+
 
 
     #def of Image to Text
@@ -276,7 +355,7 @@ class mainGui:
         audio = self.filename
 
         with sr.AudioFile(audio) as source:
-            audio = r.listen(source)
+            audio = r.record(source)
             print("Recognizing...\n Please wait....")
 
             try:
@@ -307,6 +386,49 @@ class mainGui:
                 print(e)
             print("Done... Thank You!!")
         self.result_textbox()
+
+    def video_to_text(self):
+        #tk.messagebox.showwarning("Processing...", "Please wait")
+        try:
+            file, file_extension = os.path.splitext(self.filename)
+            file = pipes.quote(file)
+            video_to_wav = 'ffmpeg -i ' + file + file_extension + ' ' + file + '.wav'
+            final_audio = 'lame ' + file + '.wav' + ' ' + file + '.mp3'
+            os.system(video_to_wav)
+            os.system(final_audio)
+            file=pipes.quote(file)
+            # os.remove(file + '.wav')
+            print("sucessfully converted ", self.filename, " into audio!")
+            self.filename = file
+        except OSError as err:
+            print(err.reason)
+            exit(1)
+        self.filename = self.filename + '.wav'
+        self.audio_to_text()
+
+
+
+    #DEF for recording video
+    def video_record(self):
+        self.cap = cv2.VideoCapture(0)
+
+        while (True):
+            # Capture frame-by-frame
+            ret, frame = self.cap.read()
+
+            # Our operations on the frame come here
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            # Display the resulting frame
+            self.file = cv2.imshow('frame', gray)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        # When everything done, release the capture
+        self.cap.release()
+        cv2.destroyAllWindows()
+        tk.messagebox.showinfo("Alert", "Please selct the recorded file..")
+
 
 
 
@@ -350,7 +472,7 @@ class mainGui:
         self.textbox.delete('1.0', END)
         self.textbox.insert(END, self.translated_finalText)
         self.view_original_button.pack(padx=2, pady=2)
-        self.view_original_button.place(x=1130, y=500)
+        self.view_original_button.place(x=1230, y=500)
 
 
 
@@ -384,21 +506,38 @@ class mainGui:
             self.view_original_button.place_forget()
             self.scr.place_forget()
 
-        # if self.record_audio_button.winfo_ismapped():
-        #     self.filename = ""
-        #     self.audiobox.delete('1.0', END)
-        #     self.audiobox.place_forget()
-        #     self.textbox.place_forget()
-        #     self.browse_image_button.place_forget()
-        #     self.capture_button.place_forget()
-        #     self.copy_button.place_forget()
-        #     self.export_button.place_forget()
-        #     self.text_it_button.place_forget()
-        #     self.listen_button.place_forget()
-        #     self.translate_button.place_forget()
-        #     self.view_original_button.place_forget()
-        #     self.scr.place_forget()
+    def forget_audio_window_button(self):
+        if self.record_audio_button.winfo_ismapped():
+            self.filename = ""
+            self.audiobox.delete('1.0', END)
+            self.audiobox.place_forget()
+            self.textbox.place_forget()
+            self.browse_image_button.place_forget()
+            self.record_audio_button.place_forget()
+            self.copy_button.place_forget()
+            self.export_button.place_forget()
+            self.text_it_button.place_forget()
+            self.listen_button.place_forget()
+            self.translate_button.place_forget()
+            self.view_original_button.place_forget()
+            self.scr.place_forget()
 
+
+    def forget_video_window_button(self):
+        if self.capture_button.winfo_ismapped():
+            self.filename = ""
+            self.audiobox.delete('1.0', END)
+            self.audiobox.place_forget()
+            self.textbox.place_forget()
+            self.browse_image_button.place_forget()
+            self.capture_button.place_forget()
+            self.copy_button.place_forget()
+            self.export_button.place_forget()
+            self.text_it_button.place_forget()
+            self.listen_button.place_forget()
+            self.translate_button.place_forget()
+            self.view_original_button.place_forget()
+            self.scr.place_forget()
 
     def quit(self):
         root.destroy()
@@ -440,7 +579,8 @@ class mainGui:
             else:
                 self.put_audiointo_textbox()
 
-
+    def browseVideoFunc(self):
+         self.filename = filedialog.askopenfilename(initialdir="/", title="Select video file", filetypes=(("mp4 files", "*.mp4"), ("3gp files", "*.3gp"), ("all files", "*.*")))
 
 
 
